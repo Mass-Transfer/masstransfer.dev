@@ -1,0 +1,48 @@
+body {
+  background: linear-gradient(30deg, #222222 0%, #111111 100%);
+}
+
+.splash {
+  height: 100vh;
+  display: grid;
+  grid-template-areas: ". . . . ." ". title1 title1 title1 ." ". title2 title2 . ." ". title3 . . ." ". . . . .";
+  grid-template-columns: 2fr min-content 1em 1em 2fr;
+  grid-template-rows: 1fr min-content min-content min-content 1fr;
+  font-family: "Chakra Petch", sans-serif;
+  font-weight: 800;
+  font-size: 6em;
+  color: rgba(255, 255, 255, 0.8);
+  text-align: right;
+}
+.splash .splash-title1 {
+  grid-area: title1;
+}
+.splash .splash-title2 {
+  grid-area: title2;
+}
+.splash .splash-title3 {
+  grid-area: title3;
+}
+
+::selection {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #222222;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+/*# sourceMappingURL=styles.css.map */
