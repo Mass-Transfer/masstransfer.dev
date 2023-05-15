@@ -1,5 +1,9 @@
+html {
+  scroll-snap-type: y mandatory;
+}
+
 body {
-  background: linear-gradient(30deg, #222222 0%, #111111 100%);
+  background: #111111 linear-gradient(30deg, #111111 0%, #222222 100%);
 }
 
 .splash {
@@ -8,20 +12,123 @@ body {
   grid-template-areas: ". . . . ." ". title1 title1 title1 ." ". title2 title2 . ." ". title3 . . ." ". . . . .";
   grid-template-columns: 2fr min-content 1em 1em 2fr;
   grid-template-rows: 1fr min-content min-content min-content 1fr;
+  scroll-snap-align: start;
   font-family: "Chakra Petch", sans-serif;
   font-weight: 800;
   font-size: 6em;
-  color: rgba(255, 255, 255, 0.8);
+  color: rgb(255, 255, 255);
   text-align: right;
 }
-.splash .splash-title1 {
+.splash-title1 {
   grid-area: title1;
 }
-.splash .splash-title2 {
+.splash-title2 {
   grid-area: title2;
 }
-.splash .splash-title3 {
+.splash-title3 {
   grid-area: title3;
+}
+
+.panes {
+  height: 100vh;
+  display: grid;
+  grid-template-areas: "rollercaster darkfield socials";
+  grid-template-columns: 33.33% 33.34% 33.33%;
+  grid-template-rows: 100vh;
+  justify-content: center;
+  align-items: stretch;
+  scroll-snap-align: start;
+  transition: 300ms;
+  font-family: "Chakra Petch", sans-serif;
+  font-weight: 800;
+  font-size: 4em;
+  color: rgba(255, 255, 255, 0.8);
+  text-align: center;
+  white-space: nowrap;
+  text-overflow: clip;
+  overflow: hidden;
+}
+.panes:has(.panes-rollercaster:hover) {
+  grid-template-columns: 60% 20% 20%;
+}
+.panes-rollercaster {
+  grid-area: rollercaster;
+  background-color: rgba(128, 200, 64, 0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+.panes:has(.panes-darkfield:hover) {
+  grid-template-columns: 20% 60% 20%;
+}
+.panes-darkfield {
+  grid-area: darkfield;
+  background-color: rgba(255, 128, 0, 0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+.panes:has(.panes-socials:hover) {
+  grid-template-columns: 30% 30% 40%;
+}
+.panes-socials {
+  grid-area: socials;
+  display: grid;
+  grid-template-areas: "discord" "youtube" "twitter" "reddit";
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr 1fr 1fr 1fr;
+  justify-content: center;
+  align-content: center;
+  align-items: center;
+  align-self: center;
+  transition: 300ms;
+  font-size: 0.75em;
+}
+.panes-socials:has(.panes-socials-discord:hover) {
+  grid-template-rows: 2fr 1fr 1fr 1fr;
+}
+.panes-socials-discord {
+  grid-area: discord;
+  background-color: rgba(88, 101, 242, 0.8);
+  display: flex;
+  min-height: 100%;
+  justify-content: center;
+  overflow: hidden;
+}
+.panes-socials:has(.panes-socials-youtube:hover) {
+  grid-template-rows: 1fr 2fr 1fr 1fr;
+}
+.panes-socials-youtube {
+  grid-area: youtube;
+  background-color: rgba(255, 0, 0, 0.8);
+  display: flex;
+  min-height: 100%;
+  justify-content: center;
+  overflow: hidden;
+}
+.panes-socials:has(.panes-socials-twitter:hover) {
+  grid-template-rows: 1fr 1fr 2fr 1fr;
+}
+.panes-socials-twitter {
+  grid-area: twitter;
+  background-color: rgba(29, 155, 240, 0.8);
+  display: flex;
+  min-height: 100%;
+  justify-content: center;
+  overflow: hidden;
+}
+.panes-socials:has(.panes-socials-reddit:hover) {
+  grid-template-rows: 1fr 1fr 1fr 2fr;
+}
+.panes-socials-reddit {
+  grid-area: reddit;
+  background-color: rgba(255, 69, 0, 0.8);
+  display: flex;
+  min-height: 100%;
+  justify-content: center;
+  overflow: hidden;
 }
 
 ::selection {
@@ -31,16 +138,13 @@ body {
 ::-webkit-scrollbar {
   width: 10px;
 }
-
 ::-webkit-scrollbar-track {
-  background: #222222;
+  background: #111111;
 }
-
 ::-webkit-scrollbar-thumb {
   background: rgba(255, 255, 255, 0.1);
-  border-radius: 10px;
+  border-radius: 1em;
 }
-
 ::-webkit-scrollbar-thumb:hover {
   background: rgba(255, 255, 255, 0.2);
 }
