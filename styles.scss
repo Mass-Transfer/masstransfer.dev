@@ -1,167 +1,273 @@
-html {
-  scroll-snap-type: y mandatory;
+$parallax-perspective: 16px;
+
+@function parallax-scale-factor($z-distance) {
+  @return ($parallax-perspective - $z-distance) / $parallax-perspective;
 }
 
 body {
-  background: #111111 linear-gradient(30deg, #111111 0%, #222222 100%);
+  background: #FF0000;
+}
+
+h1 {
+  font-family: "Days One", sans-serif;
+  font-weight: 800;
+  font-size: 6rem;
+  font-style: italic;
+  color: rgba(255, 255, 255, 1);
+}
+
+h2 {
+  font-family: "Days One", sans-serif;
+  font-weight: 400;
+  font-size: 8rem;
+  font-style: italic;
+  text-transform: uppercase;
+
+  color: rgba(255, 255, 255, .1);
+
+  margin: 0 0;
+}
+
+h3 {
+  font-family: "Days One", sans-serif;
+  font-weight: 100;
+  font-size: 6rem;
+  font-style: italic;
+  text-transform: uppercase;
+
+  color: rgba(255, 255, 255, 1);
+
+  margin: 0 0;
+}
+
+h4 {
+  font-family: "Days One", sans-serif;
+  font-weight: 400;
+  font-size: 3rem;
+  font-style: italic;
+  text-transform: uppercase;
+
+  color: rgba(127, 127, 127, 1);
+
+  margin: -2.5rem 0 1rem 0;
+}
+
+h5 {
+  font-family: "Nunito Sans", sans-serif;
+  font-weight: 100;
+  font-size: 1.2rem;
+
+  color: rgba(255, 255, 255, .9);
+
+  margin: 0 0;
+}
+
+p {
+  font-family: "Nunito Sans", sans-serif;;
+  font-weight: 100;
+  font-size: 1rem;
+  text-decoration: none;
+
+  color: rgba(255, 255, 255, .9);
+
+  //margin: 0 0;
+}
+
+a {
+  font-family: "Nunito Sans", sans-serif;;
+  font-weight: 100;
+  font-size: 1rem;
+  text-decoration: none;
+
+  color: rgba(255, 255, 255, .9);
+
+  margin: 0 0;
+}
+
+.parallax-container {
+  width: 100%;
+  height: 100vh;
+  overflow-x: hidden;
+  overflow-y: scroll;
+  perspective: $parallax-perspective;
+  perspective-origin: 50%;
+
+  scroll-behavior: smooth;
+  scroll-snap-type: y proximity;
 }
 
 .splash {
-  height: 100vh;
-  display: grid;
-  grid-template-areas:
-    ". . . . ."
-    ". title1 title1 title1 ."
-    ". title2 title2 . ."
-    ". title3 . . ."
-    ". . . . .";
-  grid-template-columns: 2fr min-content 1em 1em 2fr;
-  grid-template-rows: 1fr min-content min-content min-content 1fr;
-
   scroll-snap-align: start;
 
-  font-family: "Chakra Petch", sans-serif;
-  font-weight: 800;
-  font-size: 6em;
-  color: rgba(255, 255, 255, 1);
-  text-align: right;
+  width: 100%;
+  height: 100vh;
+  margin: 0 0;
 
-  &-title1 {
-    grid-area: title1;
-  }
-  &-title2 {
-    grid-area: title2;
-  }
-  &-title3 {
-    grid-area: title3;
+  .splash-title {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(30deg, rgba(0, 0, 0, 100%) 0%, rgba(0, 0, 0, 20%) 100%);
+
+    h1 {
+      text-align: right;
+
+      margin: 0 0;
+      height: 100%;
+      width: 100%;
+
+      display: grid;
+      grid-template-areas:
+        ". . . . ."
+        ". title1 title1 title1."
+        ". title2 title2 . ."
+        ". title3 . . ."
+        ". . . . .";
+      grid-template-columns: 2fr min-content 1fr 1fr 2fr;
+      grid-template-rows: 1fr min-content min-content min-content 1fr;
+
+      span:nth-child(1) {
+        grid-area: title1;
+      }
+      span:nth-child(2) {
+        grid-area: title2;
+      }
+      span:nth-child(3) {
+        grid-area: title3;
+      }
+
+      @keyframes title-shift {
+        0% {
+          grid-template-columns: 2fr min-content 1fr 1fr 2fr;
+        }
+        100% {
+          grid-template-columns: 100fr min-content 0fr 0fr 10fr;
+        }
+      }
+      animation: title-shift auto linear;
+      animation-range: entry-crossing 100% exit-crossing 100%;
+      animation-timeline: view();
+    }
   }
 }
 
-.panes {
+.background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
   height: 100vh;
-  display: grid;
-  grid-template-areas:
-    "rollercaster darkfield socials";
-  grid-template-columns: 33.33% 33.34% 33.33%;
-  grid-template-rows: 100vh;
-  justify-content: center;
-  align-items: stretch;
+  margin: 0 0;
 
+  transform: translateZ(-16px) scale(parallax-scale-factor(-16px)+0.01);
+
+  z-index: -10;
+
+  &-image {
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%)
+  }
+}
+
+.frame {
   scroll-snap-align: start;
 
-  transition: 300ms;
+  height: 500vh;
+  overflow: visible;
+  left: 0;
 
-  font-family: "Chakra Petch", sans-serif;
-  font-weight: 800;
-  font-size: 4em;
-  color: rgba(255, 255, 255, 0.8);
-  text-align: center;
-  white-space: nowrap;
-  text-overflow: clip;
+  background: linear-gradient(30deg, #555555 0%, #222222 100%);
 
-  overflow: hidden;
+  view-timeline-name: --frame-timeline;
+  view-timeline-axis: block;
 
-  &:has(.panes-rollercaster:hover) {
-    grid-template-columns: 60% 20% 20%;
-  }
-  &-rollercaster {
-    grid-area: rollercaster;
-    background-color: rgba(128, 200, 64, 0.8);
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  .sticky {
+    height: 100vh;
+    width: 100vw;
+    position: sticky;
+    top: 0;
+    left: 0;
 
     overflow: hidden;
-  }
 
-  &:has(.panes-darkfield:hover) {
-    grid-template-columns: 20% 60% 20%;
-  }
-  &-darkfield {
-    grid-area: darkfield;
-    background-color: rgba(255, 128, 0, 0.8);
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    .scroller {
+      box-sizing: border-box;
+      height: 100%;
+      width: max-content;
 
-    overflow: hidden;
-  }
-
-  &:has(.panes-socials:hover) {
-    grid-template-columns: 30% 30% 40%;
-  }
-  &-socials {
-    grid-area: socials;
-    display: grid;
-    grid-template-areas:
-      "discord"
-      "youtube"
-      "twitter"
-      "reddit";
-    grid-template-columns: 1fr;
-    grid-template-rows: 1fr 1fr 1fr 1fr;
-    justify-content: center;
-    align-content: center;
-    align-items: center;
-    align-self: center;
-
-    transition: 300ms;
-
-    font-size: .75em;
-
-    &:has(.panes-socials-discord:hover) {
-      grid-template-rows: 2fr 1fr 1fr 1fr;
-    }
-    &-discord {
-      grid-area: discord;
-      background-color: rgba(88, 101, 242, 0.8);
       display: flex;
-      min-height: 100%;
-      justify-content: center;
+      align-items: center;
+      padding: 10vh;
+      gap: 10vh;
 
-      overflow: hidden;
+      &.ltr {
+        @keyframes hscroll-ltr {
+          0% {
+            transform: translateX(0);
+            left: 0;
+          }
+          100% {
+            transform: translateX(calc(-100% + 100vw));
+            left: 0;
+          }
+        }
+
+        animation: linear hscroll-ltr forwards;
+        animation-timeline: --frame-timeline;
+        animation-range: contain 0% contain 100%;
+      }
+
+      &.rtl {
+        @keyframes hscroll-rtl {
+          0% {
+            transform: translateX(calc(-100% + 100vw));
+            left: 0;
+          }
+          100% {
+            transform: translateX(0);
+            left: 0;
+          }
+        }
+
+        transform: translateX(calc(-100% + 100vw));
+        animation: linear hscroll-rtl forwards;
+        animation-timeline: --frame-timeline;
+        animation-range: contain 0% contain 100%;
+        flex-direction: row-reverse;
+      }
+
+      .card {
+        height: 100%;
+        margin: 0;
+        background: linear-gradient(30deg, #555555 0%, #222222 100%);
+
+        &.h {
+          aspect-ratio: 1.618;
+        }
+
+        &.v {
+          aspect-ratio: 0.618;
+        }
+
+        img {
+          height: 100%;
+          width: 100%;
+          object-fit: cover;
+        }
+      }
     }
-
-    &:has(.panes-socials-youtube:hover) {
-      grid-template-rows: 1fr 2fr 1fr 1fr;
-    }
-    &-youtube {
-      grid-area: youtube;
-      background-color: rgba(255, 0, 0, 0.8);
-      display: flex;
-      min-height: 100%;
-      justify-content: center;
-
-      overflow: hidden;
-    }
-
-    &:has(.panes-socials-twitter:hover) {
-      grid-template-rows: 1fr 1fr 2fr 1fr;
-    }
-    &-twitter {
-      grid-area: twitter;
-      background-color: rgba(29, 155, 240, 0.8);
-      display: flex;
-      min-height: 100%;
-      justify-content: center;
-
-      overflow: hidden;
-    }
-
-    &:has(.panes-socials-reddit:hover) {
-      grid-template-rows: 1fr 1fr 1fr 2fr;
-    }
-    &-reddit {
-      grid-area: reddit;
-      background-color: rgba(255, 69, 0, 0.8);
-      display: flex;
-      min-height: 100%;
-      justify-content: center;
-
-      overflow: hidden;
-    }
-
   }
+}
+
+footer {
+  scroll-snap-align: end;
+
+  background: linear-gradient(30deg, #111111 0%, #222222 100%);
+  padding: 2rem 5rem;
 }
 
 ::selection {
