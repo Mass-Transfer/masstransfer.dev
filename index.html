@@ -151,26 +151,24 @@
 <script>
     const hScrollLtoRFrame = document.querySelectorAll(".frame.scroller");
 
-    let hScrolling = false;
-
     hScrollLtoRFrame.forEach(frame => {
-        frame.addEventListener("wheel", (event) => {
-            if (hScrolling) {
-                event.preventDefault();
-                frame.scrollLeft += event.deltaY;
+        const content = frame.querySelector(".content");
 
-                if (frame.scrollLeft <= 0 || frame.scrollLeft >= frame.scrollWidth - frame.offsetWidth) {
-                    hScrolling = false;
-                }
-            } else {
-                const frameCenterY = frame.getBoundingClientRect().top + frame.offsetHeight / 2;
-                const windowCenterY = window.innerHeight / 2;
-                if (Math.abs(frameCenterY - windowCenterY) < 50) {
-                    hScrolling = true;
-                    event.preventDefault();
-                    frame.scrollLeft += event.deltaY;
-                }
-            }
+        frame.style.height = (content.scrollWidth - window.innerWidth + window.innerHeight) + "px";
+    });
+
+    document.addEventListener("wheel", () => {
+        hScrollLtoRFrame.forEach(frame => {
+            const content = frame.querySelector(".content");
+
+            const rect = frame.getBoundingClientRect();
+            const frameTop = rect.top + window.scrollY;
+
+            console.log(frameTop);
+
+            const scrollPercentage = frame.scrollTop / (frame.scrollHeight - frame.clientHeight);
+            const childScrollableWidth = content.scrollWidth - content.clientWidth;
+            content.scrollRight = childScrollableWidth * scrollPercentage;
         });
     });
 </script>
